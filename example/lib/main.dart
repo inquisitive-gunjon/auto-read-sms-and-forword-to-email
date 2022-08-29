@@ -83,22 +83,26 @@ class _MyAppState extends State<MyApp> {
     if (!mounted) return;
   }
   Future senEmail(String sms)async{
-    final user= await GoogleAuthApi.signIn();
-    if(user==null)return;
-
-    //final email = 'gunjon.cse@gmail.com';
-    final email = user.email;
-    final auth = await user.authentication;
-    final accessToken=auth.accessToken!;
-    final smtpServer = gmailSaslXoauth2(email, accessToken);
+    // final user= await GoogleAuthApi.signIn();
+    // if(user==null)return;
+    //
+    // //final email = 'gunjon.cse@gmail.com';
+    final email = "paykassma@gmail.com";//user.email;
+    // final auth = await user.authentication;
+    // final accessToken=auth.accessToken!;
+    //final smtpServer = gmailSaslXoauth2(email, accessToken);
+    final smtpServer = gmail("email","yyjmvisgvhkmjxct");//rahirahi
+    print(smtpServer.toString());
 
     final message = Message()
-    ..from=Address(email,'Gunjon')
+    ..from=Address(email,email)
     ..recipients=['gunjon.cse@gmail.com']
     ..subject='from sms'
     ..text=sms;
-
+    print(message.text);
+    print(sms);
     try{
+      print("sending...");
       await send(message, smtpServer);
       print("success");
     }on MailerException catch(e){
